@@ -5,6 +5,7 @@
 % ECE662:   Pattern Recognition & Decision Making Processes
 % Title:    Generating two or more classes with controlled prior.
 % Date:     2014-04-14
+% Author:   Alex Gheith
  
 sectionToRun = 4;
  
@@ -61,7 +62,7 @@ switch sectionToRun
         % Control via Uniform PDF.
         uniform = rand([sampleCount, 1]);
  
-        p1 = 0.5;              % Class 1 Probability. (Threshold)
+        p1 = 0.25;              % Class 1 Probability. (Threshold)
  
 %         % Conceptually
 %         for i = 1 : length(uniform)
@@ -104,7 +105,7 @@ switch sectionToRun
         % Control via Uniform PDF.
         uniform = rand([sampleCount, 1]);
  
-        p1 = 0.25;              % Class 1 Probability. (Threshold)
+        p1 = 0.5;              % Class 1 Probability. (Threshold)
  
         % Proper implementation: Logical Indexing.
         class1Mask = uniform <= p1;
