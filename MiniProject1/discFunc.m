@@ -1,5 +1,5 @@
 function [ z ] = discFunc(x,P1,M1,Sigma1,P2,M2,Sigma2, CFlag)
-%compute 3.119 and return number of samples that are misclassified
+%compute  and return number of samples that are misclassified
 %Written by J. Zhou
  
 [N,M] = size(x); %M samples
