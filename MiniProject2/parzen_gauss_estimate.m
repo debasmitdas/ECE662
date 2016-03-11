@@ -4,6 +4,6 @@
 function pn=parzen_gauss_estimate(h, Data, x)
   [n, d] = size (Data);
   hn=h/sqrt(n);
-  phi = gauss_kernel((Data - ones(n,1)*x)/hn)
+  phi = gauss_kernel((Data - ones(n,1)*x)/hn);
   pn = sum(phi)/(hn);
 end
