@@ -1,3 +1,4 @@
+%Functions to Compute Error Using Parzen Method
 function e=errorParzen(h,DataTest,LabelTest,DataTrain1,DataTrain2)
 ella=0;
 size_test=size(DataTest,1);

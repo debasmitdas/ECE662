@@ -1,11 +1,13 @@
+%Error Calculation by Varying Distances
 Prior1=0.5;
 Prior2=0.5;
 %Dimension of Data Defined
+%Dimension=2;
 Dimension=2;
 Mean1=zeros(Dimension,1);
 
 %Covariance Matrix are set here
-Cov1=[1 0.5 ;0.5 1];
+Cov1=0.5*ones(Dimension,Dimension)+0.5*eye(Dimension,Dimension);
 Cov2=eye(Dimension,Dimension);
 %For training use 500 points of 1 class and 500 points of another class
 plot([],[])
@@ -63,3 +65,4 @@ end
 errorbar(E_MLE,VAR_MLE);
 errorbar(E_P,VAR_P);
 legend('Error Rate (MLE)','Error Rate (Parzen)');
+legend boxoff;

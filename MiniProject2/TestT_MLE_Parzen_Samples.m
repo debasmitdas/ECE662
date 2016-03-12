@@ -1,3 +1,4 @@
+%Classification Time by varying sample size
 Prior1=0.5;
 Prior2=0.5;
 %Dimension of Data Defined
@@ -5,22 +6,22 @@ Dimension=2;
 Mean1=zeros(Dimension,1);
 Mean2=eye(Dimension,1);
 %Covariance Matrix are set here
-Cov1=[1 0.5 ;0.5 1];
+Cov1=0.5*ones(Dimension,Dimension)+0.5*eye(Dimension,Dimension);
 Cov2=eye(Dimension,Dimension);
 %For training use 500 points of 1 class and 500 points of another class
 plot([],[])
-ET_MLE=zeros(30,1);
-VART_MLE=zeros(30,1);
-ET_P=zeros(30,1);
-VART_P=zeros(30,1);
+ET_MLE=zeros(10,1);
+VART_MLE=zeros(10,1);
+ET_P=zeros(10,1);
+VART_P=zeros(10,1);
 hold on
-for s=1:30
+for s=1:10
     
     %test=zeros(100,1);
     et_mle=zeros(100,1);
     et_p=zeros(100,1);
     h=10;%h=10 seems to be ideal
-    [atrain,btrain]= genranddatafu(Prior1,Mean1,Cov1,Prior2,Mean2,Cov2,100);
+    [atrain,btrain]= genranddatafu(Prior1,Mean1,Cov1,Prior2,Mean2,Cov2,s*100);
     %Segregating Data
     
     Data1=[];
@@ -46,11 +47,6 @@ for s=1:30
         e_p(j)=errorParzen(h, atest, btest, Data1, Data2);
         et_p(j)=cputime-t;
     end
-    %plot(d,z(i),'gx'); For Plotting the 100 emperical error points
-
-    %plot(d, BayesErrorMonteCarlo(Dimension,Prior1,Mean1,Cov1,Prior2,Mean2,Cov2,1000),'k*')
-    %Tte(d)=mean(testt);
-    %TteVAR(d)=var(testt);
     ET_MLE(s)=mean(et_mle);
     VART_MLE(s)=var(et_mle);
     ET_P(s)=mean(et_p);
@@ -60,3 +56,4 @@ end
 errorbar(ET_MLE,VART_MLE);
 errorbar(ET_P,VART_P);
 legend('CPU Time (MLE)','CPU Time (Parzen)');
+legend boxoff;

@@ -1,27 +1,28 @@
+%Error Calculation by varying Sample Size
 Prior1=0.5;
 Prior2=0.5;
 %Dimension of Data Defined
-Dimension=2;
+Dimension=10;
 Mean1=zeros(Dimension,1);
 Mean2=eye(Dimension,1);
 %Covariance Matrix are set here
-Cov1=[1 0.5 ;0.5 1];
+Cov1=0.5*ones(Dimension,Dimension)+0.5*eye(Dimension,Dimension);
 Cov2=eye(Dimension,Dimension);
 %For training use 500 points of 1 class and 500 points of another class
 plot([],[])
-E_MLE=zeros(30,1);
-VAR_MLE=zeros(30,1);
+E_MLE=zeros(10,1);
+VAR_MLE=zeros(10,1);
 %Ttr=zeros(30,1);
 %Tte=zeros(30,1);
 %TteVAR=zeros(30,1);
-E_P=zeros(30,1);
-VAR_P=zeros(30,1);
+E_P=zeros(10,1);
+VAR_P=zeros(10,1);
 hold on
-for s=1:30
+for s=1:10
     e_mle=zeros(100,1);
     e_p=zeros(100,1);
     h=10;%h=10 seems to be ideal
-    [atrain,btrain]= genranddatafu(Prior1,Mean1,Cov1,Prior2,Mean2,Cov2,100);
+    [atrain,btrain]= genranddatafu(Prior1,Mean1,Cov1,Prior2,Mean2,Cov2,s*30);
     %Segregating Data
     
     Data1=[];
@@ -39,7 +40,7 @@ for s=1:30
     %Ttr(d)=cputime-t;
     %testt=zeros(100,1);
     for j=1:100
-        [atest,btest]= genranddatafu(Prior1,Mean1,Cov1,Prior2,Mean2,Cov2,s*5);
+        [atest,btest]= genranddatafu(Prior1,Mean1,Cov1,Prior2,Mean2,Cov2,30);
         %t=cputime;
         e_mle(j)=discErr(atest,Prior1,mu1',sigma1,Prior2,mu2',sigma2, btest);
         %testt(j)=cputime-t;
