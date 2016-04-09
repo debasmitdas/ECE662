@@ -1,0 +1,11 @@
+%code for separating the samples into samples of class 1 and class 2
+%Run this in the command line
+
+
+for i=1:size(l,1)
+        if(btrain(i,1)==0)
+            Data1=[Data1;atrain(i,:)];
+        else
+            Data2=[Data2;atrain(i,:)];
+        end
+end
