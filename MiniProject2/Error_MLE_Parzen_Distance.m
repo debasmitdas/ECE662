@@ -26,8 +26,8 @@ for d=1:5
     e_p=zeros(100,1);
     h=10;%h=10 seems to be ideal
     [atrain,btrain]= genranddatafu(Prior1,Mean1,Cov1,Prior2,Mean2,Cov2,100);
+
     %Segregating Data
-    
     Data1=[];
     Data2=[];
     for i=1:size(btrain,1)
