@@ -1,8 +1,9 @@
+%Function to compare classification Time with no. of samples
 %Priors are defined
 Prior1=0.5;
 Prior2=0.5;
 %Dimension of Data defined
-Dimension=20;
+Dimension=10;
 Mean1=zeros(Dimension,1);
 Mean2=eye(Dimension,1);
 %Covariance Matrix are set here
@@ -25,7 +26,7 @@ for sam=1:10 % As distance between 2 distributions are varied
     et_mle=zeros(100,1);
     %h=10;%h=10 seems to be ideal
     hP=10; %Parzen scale parameter
-    [atrain,btrain]= genranddatafu(Prior1,Mean1,Cov1,Prior2,Mean2,Cov2,sam*30);
+    [atrain,btrain]= genranddatafu(Prior1,Mean1,Cov1,Prior2,Mean2,Cov2,sam*80);
     
         %Segregating Data
     Data1=[];
@@ -59,7 +60,7 @@ for sam=1:10 % As distance between 2 distributions are varied
     [~,scores] = predict(svmM,xGrid);
     contour(x1Grid,x2Grid,reshape(scores(:,2),size(x1Grid)),[0 0],'k');
     legend(h,{'-1','+1','Support Vectors'});
-    title(['SVM Classification with RBF Kernel Scale Parameter - ',num2str(svmM.KernelParameters.Scale)])
+    title(['SVM Classification with RBF Kernel Scale Parameter - ',num2str(svmM.KernelParameters.Scale),', Samples = ',num2str(sam*80)])
     axis equal
     hold off
     end
@@ -74,7 +75,7 @@ for sam=1:10 % As distance between 2 distributions are varied
     
     
     for j=1:100
-        [atest,btest]= genranddatafu(Prior1,Mean1,Cov1,Prior2,Mean2,Cov2,30);
+        [atest,btest]= genranddatafu(Prior1,Mean1,Cov1,Prior2,Mean2,Cov2,sam*20);
         t=cputime;
         e_mle(j)=discErr(atest,Prior1,mu1',sigma1,Prior2,mu2',sigma2, btest);
         et_mle(j)=cputime-t;
@@ -108,11 +109,11 @@ hold on
 errorbar(ET_P,VART_P);
 errorbar(ET_MLE,VART_MLE);
 errorbar(ET_LDA,VART_LDA);
-title('Effect of Number of samples on Error Rate');
+title('Effect of Number of samples on Classification Time');
 legend('Error Rate (SVM)','Error Rate (Parzen)','Error Rate (MLE)','Error Rate (LDA)');
 legend boxoff;
 xlabel('Number of Samples') % x-axis label
-ylabel('Error Rate') % y-axis label
+ylabel('CPU Time') % y-axis label
     
 
 %Do the testing here

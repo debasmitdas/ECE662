@@ -1,16 +1,18 @@
+%Code to compare classifier error with distance
 %Priors are defined
 Prior1=0.5;
 Prior2=0.5;
 %Dimension of Data defined
-Dimension=2;
+Dimension=40;
 %Number of training and testing points
-tr=80;te=20;
+tr=400;te=100;
 %Defining the parameters
 Mean1=zeros(Dimension,1);
 
 %Covariance Matrix are set here
 Cov1=0.5*ones(Dimension,Dimension)+0.5*eye(Dimension,Dimension);
 Cov2=eye(Dimension,Dimension);
+%Cov2=Cov1;
 %For training use 500 points of 1 class and 500 points of another class
 E_SVM=zeros(te,1);
 VAR_SVM=zeros(te,1);
@@ -63,7 +65,9 @@ for dis=1:10 % As distance between 2 distributions are varied
     [~,scores] = predict(svmM,xGrid);
     contour(x1Grid,x2Grid,reshape(scores(:,2),size(x1Grid)),[0 0],'k');
     legend(h,{'-1','+1','Support Vectors'});
-    title(['SVM Classification with RBF Kernel Scale Parameter - ',num2str(svmM.KernelParameters.Scale)])
+    title(['SVM Classification with RBF Kernel,  ', 'Scale Parameter =  ',num2str(svmM.KernelParameters.Scale),',  Distance = ',num2str(dis)])
+    xlabel('x') % x-axis label
+    ylabel('y') % y-axis labe
     axis equal
     hold off
     end

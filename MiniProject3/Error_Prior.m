@@ -1,10 +1,11 @@
+%Function to compare classification Error with Priors
 %Priors are defined
 Prior1=0.1;
 Prior2=0.9;
 %Dimension of Data defined
 Dimension=2;
 Mean1=zeros(Dimension,1);
-Mean2=eye(Dimension,1);
+Mean2=3*eye(Dimension,1);
 %Covariance Matrix are set here
 Cov1=0.5*ones(Dimension,Dimension)+0.5*eye(Dimension,Dimension);
 Cov2=eye(Dimension,Dimension);
@@ -23,7 +24,7 @@ for Prior=1:9 % As distance between 2 distributions are varied
     %e_p=zeros(100,1);
     %h=10;%h=10 seems to be ideal
     hP=10; %Parzen scale parameter
-    [atrain,btrain]= genranddatafu(0.1*Prior,Mean1,Cov1,1-0.1*Prior,Mean2,Cov2,100);
+    [atrain,btrain]= genranddatafu(0.1*Prior,Mean1,Cov1,1-0.1*Prior,Mean2,Cov2,160);
     
         %Segregating Data
     Data1=[];
@@ -72,7 +73,7 @@ for Prior=1:9 % As distance between 2 distributions are varied
     
     
     for j=1:100
-        [atest,btest]= genranddatafu(0.1*Prior,Mean1,Cov1,1-0.1*Prior,Mean2,Cov2,30);
+        [atest,btest]= genranddatafu(0.1*Prior,Mean1,Cov1,1-0.1*Prior,Mean2,Cov2,40);
         e_mle(j)=discErr(atest,Prior1,mu1',sigma1,Prior2,mu2',sigma2, btest);
         %testt(j)=cputime-t;
         [label,scores] = predict(svmM,atest);

@@ -1,10 +1,11 @@
+%Function to Compare Classification time with Distance
 %Priors are defined
 Prior1=0.5;
 Prior2=0.5;
 %Dimension of Data defined
-Dimension=2;
+Dimension=40;
 %Number of training and testing points
-tr=80;te=20;
+tr=400;te=100;
 %Defining the parameters
 Mean1=zeros(Dimension,1);
 

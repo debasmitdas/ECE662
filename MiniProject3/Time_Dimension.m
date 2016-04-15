@@ -1,12 +1,13 @@
+%Function to compare classification Time with dimensions
 %Priors are defined
 Prior1=0.5;
 Prior2=0.5;
 
-Mean1=zeros(Dimension,1);
-Mean2=eye(Dimension,1);
+%Mean1=zeros(Dimension,1);
+%Mean2=eye(Dimension,1);
 %Covariance Matrix are set here
-Cov1=0.5*ones(Dimension,Dimension)+0.5*eye(Dimension,Dimension);
-Cov2=eye(Dimension,Dimension);
+%Cov1=0.5*ones(Dimension,Dimension)+0.5*eye(Dimension,Dimension);
+%Cov2=eye(Dimension,Dimension);
 %For training use 500 points of 1 class and 500 points of another class
 %E_SVM=zeros(30,1);
 %VAR_SVM=zeros(30,1);
@@ -16,6 +17,10 @@ Cov2=eye(Dimension,Dimension);
 
 hold on
 for dim=1:30 % As distance between 2 distributions are varied
+    Mean1=zeros(dim,1);
+    Mean2=3*eye(dim,1);
+    Cov1=eye(dim,dim);
+    Cov2=Cov1+eye(dim,1)*eye(dim,1)';
 
     %test=zeros(100,1);
     et_svm=zeros(100,1);
@@ -24,7 +29,7 @@ for dim=1:30 % As distance between 2 distributions are varied
     et_mle=zeros(100,1);
     %h=10;%h=10 seems to be ideal
     hP=10; %Parzen scale parameter
-    [atrain,btrain]= genranddatafu(Prior1,Mean1,Cov1,Prior2,Mean2,Cov2,100);
+    [atrain,btrain]= genranddatafu(Prior1,Mean1,Cov1,Prior2,Mean2,Cov2,80);
     
         %Segregating Data
     Data1=[];
@@ -44,7 +49,7 @@ for dim=1:30 % As distance between 2 distributions are varied
     svmM = fitcsvm(atrain,btrain,'KernelFunction','rbf','BoxConstraint',10,'ClassNames',[0,1],'KernelScale','auto');
     
     %Code Plot for visualizing Data
-    if(Dimension==2)
+    if(dim==-1)
     figure;
     hold on
     h(1:2) = gscatter(atrain(:,1),atrain(:,2),btrain,'rb','.');
@@ -73,7 +78,7 @@ for dim=1:30 % As distance between 2 distributions are varied
     
     
     for j=1:100
-        [atest,btest]= genranddatafu(Prior1,Mean1,Cov1,Prior2,Mean2,Cov2,30);
+        [atest,btest]= genranddatafu(Prior1,Mean1,Cov1,Prior2,Mean2,Cov2,20);
         t=cputime;
         e_mle(j)=discErr(atest,Prior1,mu1',sigma1,Prior2,mu2',sigma2, btest);
         %testt(j)=cputime-t;
